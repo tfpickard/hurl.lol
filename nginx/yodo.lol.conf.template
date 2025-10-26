@@ -1,0 +1,70 @@
+# nginx configuration template for yodo.lol
+# Adjust the upstream servers and locations based on your yodo.lol application
+
+# Upstream definitions for yodo backend (adjust port as needed)
+upstream yodo_backend {
+    server localhost:8000;  # Change this port if yodo uses a different backend port
+    keepalive 32;
+}
+
+# Upstream definitions for yodo frontend (adjust port as needed)
+upstream yodo_frontend {
+    server localhost:3000;  # Change this port if yodo uses a different frontend port
+    keepalive 32;
+}
+
+# HTTP server block for yodo.lol
+server {
+    listen 80;
+    server_name yodo.lol www.yodo.lol;
+
+    # Redirect www to non-www
+    if ($host = www.yodo.lol) {
+        return 301 $scheme://yodo.lol$request_uri;
+    }
+
+    # Client max body size
+    client_max_body_size 10M;
+
+    # Logging
+    access_log /var/log/nginx/yodo.lol.access.log;
+    error_log /var/log/nginx/yodo.lol.error.log;
+
+    # Configure your yodo.lol routing here
+    # Example API routing (adjust as needed):
+    # location /api/ {
+    #     proxy_pass http://yodo_backend;
+    #     proxy_http_version 1.1;
+    #     proxy_set_header Host $host;
+    #     proxy_set_header X-Real-IP $remote_addr;
+    #     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    #     proxy_set_header X-Forwarded-Proto $scheme;
+    # }
+
+    # Example frontend routing (adjust as needed):
+    # location / {
+    #     proxy_pass http://yodo_frontend;
+    #     proxy_http_version 1.1;
+    #     proxy_set_header Host $host;
+    #     proxy_set_header X-Real-IP $remote_addr;
+    #     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    #     proxy_set_header X-Forwarded-Proto $scheme;
+    # }
+}
+
+# HTTPS server block for yodo.lol (uncomment after setting up SSL certificates)
+# server {
+#     listen 443 ssl http2;
+#     server_name yodo.lol www.yodo.lol;
+#
+#     # SSL certificates
+#     ssl_certificate /etc/letsencrypt/live/yodo.lol/fullchain.pem;
+#     ssl_certificate_key /etc/letsencrypt/live/yodo.lol/privkey.pem;
+#
+#     # SSL configuration
+#     ssl_protocols TLSv1.2 TLSv1.3;
+#     ssl_ciphers HIGH:!aNULL:!MD5;
+#     ssl_prefer_server_ciphers on;
+#
+#     # ... rest of configuration
+# }
