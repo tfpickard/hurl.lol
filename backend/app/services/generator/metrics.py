@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 """Simulated engagement metrics and influence calculation."""
 
-from backend.app.schemas import Persona, PostMetrics
-from backend.app.services.rng import rng_manager
+from app.schemas import Persona, PostMetrics
+from app.services.rng import rng_manager
 
 
 class MetricsSimulator:

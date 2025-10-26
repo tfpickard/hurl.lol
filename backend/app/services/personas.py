@@ -6,14 +6,14 @@ from typing import Any
 
 from faker import Faker
 
-from backend.app.schemas import (
+from app.schemas import (
     CreatePersonaRequest,
     Persona,
     PersonaBehavior,
     PersonaStances,
     PersonaStyle,
 )
-from backend.app.services.rng import rng_manager
+from app.services.rng import rng_manager
 
 fake = Faker()
 

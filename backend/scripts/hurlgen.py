@@ -12,8 +12,8 @@ from rich.progress import track
 # Add parent directory to path for imports
 sys.path.insert(0, "/home/user/hurl.lol")
 
-from backend.app.schemas import GenerateRequest
-from backend.app.routers.posts import generate_single_post
+from app.schemas import GenerateRequest
+from app.routers.posts import generate_single_post
 
 console = Console()
 

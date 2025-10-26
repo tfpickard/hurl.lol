@@ -3,8 +3,8 @@
 
 import re
 
-from backend.app.schemas import Persona, StyleMetrics
-from backend.app.services.rng import rng_manager
+from app.schemas import Persona, StyleMetrics
+from app.services.rng import rng_manager
 
 
 # Emoji sets

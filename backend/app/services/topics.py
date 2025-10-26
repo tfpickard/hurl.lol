@@ -6,7 +6,7 @@ from typing import Any
 
 import networkx as nx
 
-from backend.app.schemas import Topic
+from app.schemas import Topic
 
 
 # Seed topics covering diverse domains

@@ -3,8 +3,8 @@
 
 from fastapi import APIRouter, HTTPException
 
-from backend.app.schemas import CreatePersonaRequest, Persona
-from backend.app.services.personas import persona_registry
+from app.schemas import CreatePersonaRequest, Persona
+from app.services.personas import persona_registry
 
 router = APIRouter(prefix="/v1/personas", tags=["personas"])
 

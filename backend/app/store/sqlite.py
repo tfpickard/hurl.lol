@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """Optional SQLite persistence (placeholder for future implementation)."""
 
-from backend.app.schemas import Post
+from app.schemas import Post
 
 
 class SQLiteStore:

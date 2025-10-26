@@ -8,8 +8,8 @@ from typing import Any
 import numpy as np
 from scipy.special import expit  # sigmoid
 
-from backend.app.services.rng import rng_manager
-from backend.app.services.topics import topic_graph
+from app.services.rng import rng_manager
+from app.services.topics import topic_graph
 
 
 class TrendEngine:
