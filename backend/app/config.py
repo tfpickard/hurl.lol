@@ -26,7 +26,7 @@ class Settings(BaseSettings):
     llm_timeout: float = Field(default=0.150, alias="HURL_LLM_TIMEOUT")  # 150ms budget
 
     # CORS
-    allow_origins: list[str] = Field(
+    allow_origins: str | list[str] = Field(
         default=["https://hurl.lol", "http://localhost:3000"],
         alias="HURL_ALLOW_ORIGINS",
     )
@@ -46,7 +46,11 @@ class Settings(BaseSettings):
     def parse_cors_origins(cls, v):
         """Parse comma-separated CORS origins from environment variable."""
         if isinstance(v, str):
+            # Handle empty string
+            if not v.strip():
+                return []
             return [origin.strip() for origin in v.split(',') if origin.strip()]
+        # Already a list or other iterable
         return v
 
     class Config:
