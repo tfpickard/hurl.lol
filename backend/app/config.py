@@ -27,7 +27,7 @@ class Settings(BaseSettings):
 
     # CORS
     allow_origins: str | list[str] = Field(
-        default=["https://hurl.lol", "http://localhost:3000"],
+        default=["https://hurl.lol", "http://localhost:4000"],
         alias="HURL_ALLOW_ORIGINS",
     )
 

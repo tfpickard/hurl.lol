@@ -6,7 +6,7 @@ This guide explains how to configure nginx to route requests for multiple domain
 
 The nginx configuration routes requests based on the domain name:
 
-- **hurl.lol** → Hurl application (backend: port 8000, frontend: port 3000)
+- **hurl.lol** → Hurl application (backend: port 8000, frontend: port 4000)
 - **yodo.lol** → Your existing application (configure as needed)
 
 ## Prerequisites
@@ -70,7 +70,7 @@ cd /path/to/hurl.lol/backend
 source .venv/bin/activate
 python -m backend.app.main
 
-# In another terminal - start frontend on port 3000
+# In another terminal - start frontend on port 4000
 cd /path/to/hurl.lol/frontend
 npm run dev
 
@@ -160,13 +160,13 @@ sudo certbot renew --dry-run
 ### Current Port Mapping
 
 - **Port 8000**: Backend API (FastAPI)
-- **Port 3000**: Frontend (Next.js)
+- **Port 4000**: Frontend (Next.js)
 - **Port 80**: nginx HTTP
 - **Port 443**: nginx HTTPS (after SSL setup)
 
 ### If You Need to Change Ports
 
-If ports 8000 or 3000 are already in use by another application:
+If ports 8000 or 4000 are already in use by another application:
 
 1. **Change the backend port** by editing `backend/.env`:
    ```bash
@@ -182,13 +182,13 @@ If ports 8000 or 3000 are already in use by another application:
 
 3. **Change the frontend port** by editing `frontend/package.json` or starting with:
    ```bash
-   PORT=3001 npm run dev
+   PORT=4001 npm run dev
    ```
 
 4. **Update nginx configuration**:
    ```nginx
    upstream hurl_frontend {
-       server localhost:3001;  # Match the new port
+       server localhost:4001;  # Match the new port
    }
    ```
 
@@ -214,7 +214,7 @@ docker compose logs -f
 ### Common Issues
 
 1. **502 Bad Gateway**: Backend/frontend not running or wrong port
-   - Check if services are running: `netstat -tlnp | grep -E ':(8000|3000)'`
+   - Check if services are running: `netstat -tlnp | grep -E ':(8000|4000)'`
    - Verify ports in nginx config match running services
 
 2. **Permission Denied**: SELinux blocking nginx connections
@@ -327,7 +327,7 @@ Monitor your applications:
 sudo systemctl status nginx
 
 # Monitor connections
-sudo netstat -an | grep -E ':(80|443|8000|3000)'
+sudo netstat -an | grep -E ':(80|443|8000|4000)'
 
 # Watch nginx access logs
 sudo tail -f /var/log/nginx/hurl.lol.access.log
