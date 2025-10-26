@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=65", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hurl-backend"
+version = "0.1.0"
+description = "Synthetic social media generator for Hurl"
+requires-python = ">=3.12"
+dependencies = []
+
+[tool.pytest.ini_options]
+addopts = "-q"
+pythonpath = ["."]
