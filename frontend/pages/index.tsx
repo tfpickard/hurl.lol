@@ -7,7 +7,18 @@ export default function Home() {
   const [isConnected, setIsConnected] = useState(false);
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
   const [seed, setSeed] = useState<string>('');
-  const [apiUrl, setApiUrl] = useState('http://localhost:8000');
+  // Auto-detect API URL based on environment
+  // Production (hurl.lol): use same origin (nginx proxies /v1/* to backend)
+  // Development (localhost): use localhost:8000 directly
+  const getDefaultApiUrl = () => {
+    if (typeof window === 'undefined') return 'http://localhost:8000';
+    const hostname = window.location.hostname;
+    if (hostname === 'hurl.lol' || hostname.endsWith('.hurl.lol')) {
+      return window.location.origin;
+    }
+    return 'http://localhost:8000';
+  };
+  const [apiUrl, setApiUrl] = useState(getDefaultApiUrl());
   const [showImpact, setShowImpact] = useState(false);
   const [connectionError, setConnectionError] = useState<string>('');
 
