@@ -3,11 +3,11 @@
 
 import pytest
 
-from backend.app.schemas import PersonaStyle
-from backend.app.services.generator.core import text_generator
-from backend.app.services.generator.styles import style_decorator
-from backend.app.services.personas import persona_registry
-from backend.app.services.rng import rng_manager
+from app.schemas import PersonaStyle
+from app.services.generator.core import text_generator
+from app.services.generator.styles import style_decorator
+from app.services.personas import persona_registry
+from app.services.rng import rng_manager
 
 
 def test_rng_determinism():
@@ -76,7 +76,7 @@ def test_persona_creation():
 
 def test_markov_chain():
     """Test Markov chain generation."""
-    from backend.app.services.generator.core import MarkovChain
+    from app.services.generator.core import MarkovChain
 
     chain = MarkovChain(order=2)
     corpus = [
@@ -104,7 +104,7 @@ def test_template_filling():
 
 def test_toxicity_sanitization():
     """Test toxicity filtering."""
-    from backend.app.schemas import Persona, PersonaBehavior, PersonaStances
+    from app.schemas import Persona, PersonaBehavior, PersonaStances
 
     persona = Persona(
         id="test",

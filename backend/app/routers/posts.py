@@ -9,18 +9,18 @@ from typing import AsyncGenerator
 from fastapi import APIRouter, Query
 from ulid import ULID
 
-from backend.app.config import settings
-from backend.app.schemas import GenerateRequest, GenerateResponse, Post, PostLineage
-from backend.app.services.generator.core import text_generator
-from backend.app.services.generator.llm import llm_adapter
-from backend.app.services.generator.metrics import metrics_simulator
-from backend.app.services.generator.styles import style_decorator
-from backend.app.services.personas import persona_registry
-from backend.app.services.rng import rng_manager
-from backend.app.services.topics import topic_graph
-from backend.app.services.trends import trend_engine
-from backend.app.sse import SSEResponse, format_sse
-from backend.app.store.memory import memory_store
+from app.config import settings
+from app.schemas import GenerateRequest, GenerateResponse, Post, PostLineage
+from app.services.generator.core import text_generator
+from app.services.generator.llm import llm_adapter
+from app.services.generator.metrics import metrics_simulator
+from app.services.generator.styles import style_decorator
+from app.services.personas import persona_registry
+from app.services.rng import rng_manager
+from app.services.topics import topic_graph
+from app.services.trends import trend_engine
+from app.sse import SSEResponse, format_sse
+from app.store.memory import memory_store
 
 router = APIRouter(prefix="/v1", tags=["posts"])
 

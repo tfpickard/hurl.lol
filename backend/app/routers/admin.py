@@ -3,9 +3,9 @@
 
 from fastapi import APIRouter, HTTPException
 
-from backend.app.schemas import SeedRequest, SeedResponse, ShockRequest, TrendSnapshot
-from backend.app.services.rng import rng_manager
-from backend.app.services.topics import topic_graph
+from app.schemas import SeedRequest, SeedResponse, ShockRequest, TrendSnapshot
+from app.services.rng import rng_manager
+from app.services.topics import topic_graph
 
 router = APIRouter(prefix="/v1/admin", tags=["admin"])
 

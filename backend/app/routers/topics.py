@@ -3,8 +3,8 @@
 
 from fastapi import APIRouter, HTTPException
 
-from backend.app.schemas import Topic, TopicListResponse
-from backend.app.services.topics import topic_graph
+from app.schemas import Topic, TopicListResponse
+from app.services.topics import topic_graph
 
 router = APIRouter(prefix="/v1/topics", tags=["topics"])
 

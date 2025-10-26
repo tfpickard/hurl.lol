@@ -4,7 +4,7 @@
 from collections import deque
 from typing import Any
 
-from backend.app.schemas import Post
+from app.schemas import Post
 
 
 class MemoryStore:

@@ -3,8 +3,8 @@
 
 from fastapi import APIRouter
 
-from backend.app.config import settings
-from backend.app.schemas import HealthResponse
+from app.config import settings
+from app.schemas import HealthResponse
 
 router = APIRouter()
 

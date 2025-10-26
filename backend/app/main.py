@@ -10,9 +10,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from prometheus_client import Counter, Histogram, generate_latest
 from starlette.responses import Response
 
-from backend.app.config import settings
-from backend.app.routers import admin, health, personas, posts, topics
-from backend.app.services.trends import trend_engine
+from app.config import settings
+from app.routers import admin, health, personas, posts, topics
+from app.services.trends import trend_engine
 
 # Prometheus metrics
 request_count = Counter(
