@@ -4,7 +4,7 @@
 import os
 from typing import Literal
 
-from pydantic import Field
+from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings
 
 
@@ -40,6 +40,14 @@ class Settings(BaseSettings):
     # Generation defaults
     default_seed: int | None = Field(default=None, alias="HURL_DEFAULT_SEED")
     max_batch_size: int = Field(default=1000, alias="HURL_MAX_BATCH_SIZE")
+
+    @field_validator('allow_origins', mode='before')
+    @classmethod
+    def parse_cors_origins(cls, v):
+        """Parse comma-separated CORS origins from environment variable."""
+        if isinstance(v, str):
+            return [origin.strip() for origin in v.split(',') if origin.strip()]
+        return v
 
     class Config:
         """Pydantic config."""
