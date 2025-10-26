@@ -67,6 +67,7 @@ export class HurlSSEClient {
   connect(
     onPost: (post: Post) => void,
     onError?: (error: Event) => void,
+    onOpen?: () => void,
     options: StreamOptions = {}
   ): void {
     if (this.eventSource) {
@@ -115,6 +116,9 @@ export class HurlSSEClient {
       this.eventSource.onopen = () => {
         console.log('SSE connection established');
         this.reconnectAttempts = 0;
+        if (onOpen) {
+          onOpen();
+        }
       };
 
       // Handle errors
@@ -133,7 +137,7 @@ export class HurlSSEClient {
           );
 
           setTimeout(() => {
-            this.connect(onPost, onError, options);
+            this.connect(onPost, onError, onOpen, options);
           }, this.reconnectDelay * this.reconnectAttempts);
         } else {
           console.error('Max reconnection attempts reached');
