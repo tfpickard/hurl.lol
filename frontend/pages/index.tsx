@@ -55,10 +55,12 @@ export default function Home() {
           console.error('Connection error:', error);
           setIsConnected(false);
         },
+        () => {
+          // Only set connected when SSE connection is actually established
+          setIsConnected(true);
+        },
         options
       );
-
-      setIsConnected(true);
     }
   };
 
