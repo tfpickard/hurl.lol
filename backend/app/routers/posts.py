@@ -207,6 +207,9 @@ async def stream_posts_generator(
     Args:
         interval: Time between posts in seconds
     """
+    # Send initial connection event
+    yield format_sse({"status": "connected", "mode": mode}, event="connected")
+
     counter = 0
     base_seed = seed or int(time.time())
 

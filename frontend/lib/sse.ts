@@ -97,9 +97,19 @@ export class HurlSSEClient {
     }
 
     const url = `${this.baseUrl}/v1/stream?${params.toString()}`;
+    console.log('Connecting to SSE stream:', url);
 
     try {
       this.eventSource = new EventSource(url);
+
+      // Handle connected event (sent by server when stream starts)
+      this.eventSource.addEventListener('connected', (event: MessageEvent) => {
+        console.log('SSE stream connected:', event.data);
+        this.reconnectAttempts = 0;
+        if (onOpen) {
+          onOpen();
+        }
+      });
 
       // Handle post events
       this.eventSource.addEventListener('post', (event: MessageEvent) => {
@@ -112,36 +122,39 @@ export class HurlSSEClient {
         }
       });
 
-      // Handle connection open
+      // Handle connection open (EventSource native event)
       this.eventSource.onopen = () => {
-        console.log('SSE connection established');
-        this.reconnectAttempts = 0;
-        if (onOpen) {
-          onOpen();
-        }
+        console.log('EventSource connection opened');
       };
 
       // Handle errors
       this.eventSource.onerror = (error: Event) => {
-        console.error('SSE connection error:', error);
+        const eventSource = error.target as EventSource;
+        console.error('SSE connection error:', {
+          error,
+          readyState: eventSource?.readyState,
+          url,
+        });
 
         if (onError) {
           onError(error);
         }
 
-        // Auto-reconnect logic
-        if (this.reconnectAttempts < this.maxReconnectAttempts) {
-          this.reconnectAttempts++;
-          console.log(
-            `Reconnecting... Attempt ${this.reconnectAttempts}/${this.maxReconnectAttempts}`
-          );
+        // Only auto-reconnect if we're not already closing
+        if (this.eventSource && this.eventSource.readyState === EventSource.CLOSED) {
+          if (this.reconnectAttempts < this.maxReconnectAttempts) {
+            this.reconnectAttempts++;
+            console.log(
+              `Reconnecting... Attempt ${this.reconnectAttempts}/${this.maxReconnectAttempts}`
+            );
 
-          setTimeout(() => {
-            this.connect(onPost, onError, onOpen, options);
-          }, this.reconnectDelay * this.reconnectAttempts);
-        } else {
-          console.error('Max reconnection attempts reached');
-          this.disconnect();
+            setTimeout(() => {
+              this.connect(onPost, onError, onOpen, options);
+            }, this.reconnectDelay * this.reconnectAttempts);
+          } else {
+            console.error('Max reconnection attempts reached');
+            this.disconnect();
+          }
         }
       };
     } catch (error) {
