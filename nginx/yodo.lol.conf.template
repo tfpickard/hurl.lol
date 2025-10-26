@@ -9,7 +9,7 @@ upstream yodo_backend {
 
 # Upstream definitions for yodo frontend (adjust port as needed)
 upstream yodo_frontend {
-    server localhost:3000;  # Change this port if yodo uses a different frontend port
+    server localhost:4000;  # Change this port if yodo uses a different frontend port
     keepalive 32;
 }
 

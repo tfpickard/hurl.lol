@@ -26,7 +26,7 @@ Hurl is a production-ready synthetic social media post generator that creates re
 docker compose up
 
 # Backend: http://localhost:8000
-# Frontend: http://localhost:3000
+# Frontend: http://localhost:4000
 # API Docs: http://localhost:8000/docs
 ```
 
@@ -61,7 +61,7 @@ npm install
 # Run development server
 npm run dev
 
-# Frontend now running at http://localhost:3000
+# Frontend now running at http://localhost:4000
 ```
 
 ## API Examples
@@ -203,7 +203,7 @@ HURL_REQUIRE_AUTH=0
 HURL_PERSIST=0
 HURL_LLM_PROVIDER=none
 HURL_LLM_API_KEY=
-HURL_ALLOW_ORIGINS=https://hurl.lol,http://localhost:3000
+HURL_ALLOW_ORIGINS=https://hurl.lol,http://localhost:4000
 HOST=0.0.0.0
 PORT=8000
 ```

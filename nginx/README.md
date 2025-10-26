@@ -21,7 +21,7 @@ This directory contains nginx configuration files for deploying Hurl alongside o
 The nginx setup routes traffic based on domain names:
 
 ```
-hurl.lol → Backend (port 8000) + Frontend (port 3000)
+hurl.lol → Backend (port 8000) + Frontend (port 4000)
 yodo.lol → Your existing application (configure as needed)
 ```
 
@@ -39,7 +39,7 @@ yodo.lol → Your existing application (configure as needed)
 Make sure these ports are available and services are running:
 
 - **8000**: Hurl backend (FastAPI)
-- **3000**: Hurl frontend (Next.js)
+- **4000**: Hurl frontend (Next.js)
 - **80**: nginx HTTP
 - **443**: nginx HTTPS (optional, for SSL)
 
