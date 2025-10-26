@@ -9,6 +9,7 @@ export default function Home() {
   const [seed, setSeed] = useState<string>('');
   const [apiUrl, setApiUrl] = useState('http://localhost:8000');
   const [showImpact, setShowImpact] = useState(false);
+  const [connectionError, setConnectionError] = useState<string>('');
 
   const clientRef = useRef<HurlSSEClient | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -35,13 +36,17 @@ export default function Home() {
     if (isConnected) {
       clientRef.current.disconnect();
       setIsConnected(false);
+      setConnectionError('');
     } else {
+      setConnectionError('');
       const options = {
         mode,
         topics: selectedTopics.length > 0 ? selectedTopics : undefined,
         seed: seed ? parseInt(seed) : undefined,
         interval: 1.0,
       };
+
+      console.log('Starting stream with options:', options);
 
       clientRef.current.connect(
         (post) => {
@@ -54,10 +59,13 @@ export default function Home() {
         (error) => {
           console.error('Connection error:', error);
           setIsConnected(false);
+          setConnectionError(`Failed to connect to ${apiUrl}. Make sure the backend is running.`);
         },
         () => {
           // Only set connected when SSE connection is actually established
+          console.log('Connection established successfully');
           setIsConnected(true);
+          setConnectionError('');
         },
         options
       );
@@ -157,6 +165,13 @@ export default function Home() {
               >
                 {isConnected ? 'Disconnect' : 'Start Stream'}
               </button>
+
+              {/* Connection Error */}
+              {connectionError && (
+                <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded text-sm text-red-700">
+                  {connectionError}
+                </div>
+              )}
 
               {/* Impact Toggle */}
               <button
